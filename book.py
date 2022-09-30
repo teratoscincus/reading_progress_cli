@@ -16,14 +16,12 @@ class Book:
 
     def new_book(self):
         """Set values for the title and chapters attribute."""
-        self._set_book_info()
-
-    def _set_book_info(self):
-        """Set the values of the title and chapters attribute."""
         self.title = input("Title of book: ").lower()
+        self._set_chapters()
 
+    def _set_chapters(self):
+        """Set the values of the chapters attribute."""
         print("Enter 'q' when there are no more chapters to add.")
-        chapters = {}
         while True:
             chapter_name = input("Enter name of chapter: ").lower()
             if chapter_name == "q":
