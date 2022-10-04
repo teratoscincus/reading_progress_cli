@@ -31,14 +31,18 @@ class Library:
         book = Book()
         book.new_book()
 
+        self._archive_collection()
+
+    def _archive_book(self, book):
+        """
+        Update the collection and write to the archive.
+        Expects the argument for the book parameter to be an instance of a book.
+        """
         self.collection[book.title] = {
             "currently_reading": book.currently_reading,
+            "total_pages": book.total_pages,
             "current_page": book.current_page,
             "chapters": book.chapters,
         }
-        self._archive_collection()
-
-    def _archive_collection(self):
-        """Write the collection to the archive."""
         with open(self.archive, "w") as json_file:
             json.dump(self.collection, json_file)
