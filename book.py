@@ -57,3 +57,44 @@ class Book:
                 return int(page_number)
             except ValueError:
                 print("Must be a numerical value. Try again.")
+
+    def bookmark_page(self, page_number):
+        """
+        Setter method for the current_page attribute, expects and integer argument.
+        Doesn't allow page to bookmarked if it's in a chapter marked as finished.
+        In such a case it will call a method to find the first chapter not marked as
+        finished and place the bookmark on the first page of that chapter.
+        """
+        for chapter in self.chapters:
+            # Check what chapter the page is in.
+            if (
+                self.chapters[chapter]["first_page"]
+                <= page_number
+                <= self.chapters[chapter]["last_page"]
+            ):
+                # Name of chapter of given page number.
+                page_number_chapter = chapter
+                # Bookmark given page only if the chapter it's in is not finished.
+                if self.chapters[chapter]["finished"] == False:
+                    self.current_page = page_number
+                    break
+
+        else:
+            # Bookmark first page of first unfinished chapter.
+            unfinished_chapter = self._get_first_unfinished_chapter_name()
+            first_page = self.chapters[unfinished_chapter]["first_page"]
+            self.current_page = first_page
+
+            error_message = (
+                f"Page {page_number} is in the chapter '{page_number_chapter.title()}'"
+                " that is marked as finished.\nNOTE: Placing bookmark on first page of"
+                f" '{unfinished_chapter.title()}' which is the first chapter"
+                " identified as unfinished."
+            )
+            print(error_message)
+
+    def _get_first_unfinished_chapter_name(self):
+        """Return name of the first chapter in ascending order that is unfinished."""
+        for chapter in self.chapters:
+            if self.chapters[chapter]["finished"] == False:
+                return chapter
