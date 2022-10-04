@@ -33,7 +33,7 @@ class Library:
 
         self._archive_collection()
 
-    def currently_reading_book(self, book_title):
+    def set_currently_reading_book(self, book_title):
         """Checkout book and mark it as currently being read."""
         if book_title in self.collection:
             book = self._get_book_by_title(book_title)
@@ -60,7 +60,18 @@ class Library:
 
         return book
 
-    def _archive_book(self, book):
+    def get_currently_read_book(self):
+        """Return an instance of the book marked as currently being read."""
+        # Find book marked as currently being read.
+        for book_title in self.collection:
+            if self.collection[book_title]["currently_reading"] == True:
+                break
+
+        book = self._get_book_by_title(book_title)
+
+        return book
+
+    def archive_book(self, book):
         """
         Update the collection and write to the archive.
         Expects the argument for the book parameter to be an instance of a book.
