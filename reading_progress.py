@@ -48,3 +48,7 @@ library = Library()
 
 if args.add_book:
     library.add_book()
+
+if args.currently_reading:
+    book_title = args.currently_reading
+    library.currently_reading_book(book_title)

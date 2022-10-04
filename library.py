@@ -33,6 +33,33 @@ class Library:
 
         self._archive_collection()
 
+    def currently_reading_book(self, book_title):
+        """Checkout book and mark it as currently being read."""
+        if book_title in self.collection:
+            book = self._get_book_by_title(book_title)
+            book.currently_reading = True
+
+            # Add book to collection and write to archive.
+            self._archive_book(book)
+
+        else:
+            print(
+                f"Sorry, couldn't find '{book_title} in the collection.'"
+                "Are you sure you spelled the title correctly?"
+            )
+
+    def _get_book_by_title(self, book_title):
+        """Return an instance of a book specified by its title."""
+        # Init book and assign value to its attributes.
+        book = Book()
+        book.title = book_title
+        book.currently_reading = self.collection[book_title]["currently_reading"]
+        book.total_pages = self.collection[book_title]["total_pages"]
+        book.current_page = self.collection[book_title]["current_page"]
+        book.chapters = self.collection[book_title]["chapters"]
+
+        return book
+
     def _archive_book(self, book):
         """
         Update the collection and write to the archive.
