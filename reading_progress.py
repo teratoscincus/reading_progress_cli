@@ -44,11 +44,20 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
+# Init library and book marked as currently being read.
 library = Library()
+currently_read_book = library.get_currently_read_book()
 
 if args.add_book:
     library.add_book()
 
 if args.currently_reading:
-    book_title = args.currently_reading
-    library.currently_reading_book(book_title)
+    # Mark book as currently being read.
+    library.set_currently_reading_book(args.currently_reading)
+
+if args.bookmark_page:
+    # Update value of current_page attribute.
+    currently_read_book.current_page = args.bookmark_page
+
+    # Save changes.
+    library.archive_book(currently_read_book)
