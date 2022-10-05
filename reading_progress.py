@@ -46,6 +46,22 @@ parser.add_argument(
         " identified as unfinished."
     ),
 )
+# List chapters of currently read book.
+parser.add_argument(
+    "-lc",
+    "--list_chapters",
+    nargs="?",
+    const=True,
+    help=("List chapters of currently read book."),
+)
+# List book titles in collection.
+parser.add_argument(
+    "-lb",
+    "--list_books",
+    nargs="?",
+    const=True,
+    help=("List book titles in collection."),
+)
 args = parser.parse_args()
 
 # Init library.
@@ -93,37 +109,51 @@ if args.finished_chapter:
 # Save changes.
 library.archive_book(currently_read_book)
 
-# Used for below call to calculate_progress() and print().
-currently_read_chapter = currently_read_book.get_current_chapter_name()
-currently_finished_chapters = currently_read_book.get_finished_chapter_names()
+# List chapters of currently read book.
+if args.list_chapters:
+    print(f"\n  Currently reading '{currently_read_book.title.title()}'.")
+    print("\n  Chapters of the book:")
+    for chapter in currently_read_book.chapters:
+        print(f"    · {chapter.title()}")
+# List book titles in collection.
+elif args.list_books:
+    print(f"\n  Currently reading '{currently_read_book.title.title()}'.")
+    print("\n  Books in collection:")
+    for book_title in library.collection:
+        print(f"    · {book_title.title()}")
+# Show reading progress of book currently being read.
+else:
+    # Used for below call to calculate_progress() and print().
+    currently_read_chapter = currently_read_book.get_current_chapter_name()
+    currently_finished_chapters = currently_read_book.get_finished_chapter_names()
 
-# Parse calculate_progress() call argument.
-currently_read_book_info = (
-    currently_read_book,
-    currently_finished_chapters,
-    currently_read_chapter,
-)
-# Calculate reading progress.
-progress_info = calculate_progress(currently_read_book_info)
-(
-    current_chapter_pages_left,
-    current_chapter_pages_read,
-    chapter_progress_percent,
-    total_progress_percent,
-) = progress_info
+    # Parse calculate_progress() call argument.
+    currently_read_book_info = (
+        currently_read_book,
+        currently_finished_chapters,
+        currently_read_chapter,
+    )
+    # Calculate reading progress.
+    progress_info = calculate_progress(currently_read_book_info)
+    (
+        current_chapter_pages_left,
+        current_chapter_pages_read,
+        chapter_progress_percent,
+        total_progress_percent,
+    ) = progress_info
 
-# Print reading progress.
-progress_message = (
-    f"\n  Currently reading '{currently_read_book.title.title()}'.\n"
-    f"\n  You have {current_chapter_pages_left} pages left of"
-    f" '{currently_read_chapter.title()}'.\n"
-    f"  You have read {current_chapter_pages_read} pages in the chapter so far.\n"
-    f"\n  Book progress:\t{round(total_progress_percent, 2)}%.\n"
-    f"  Chapter progress:\t{round(chapter_progress_percent, 2)}%.\n"
-)
-print(progress_message)
+    # Print reading progress.
+    progress_message = (
+        f"\n  Currently reading '{currently_read_book.title.title()}'.\n"
+        f"\n  You have {current_chapter_pages_left} pages left of"
+        f" '{currently_read_chapter.title()}'.\n"
+        f"  You have read {current_chapter_pages_read} pages in the chapter so far.\n"
+        f"\n  Book progress:\t{round(total_progress_percent, 2)}%.\n"
+        f"  Chapter progress:\t{round(chapter_progress_percent, 2)}%.\n"
+    )
+    print(progress_message)
 
-# Print bullet list of finished chapters.
-print("  Chapters finished:")
-for chapter in currently_finished_chapters:
-    print(f"    · {chapter.title()}")
+    # Print bullet list of finished chapters.
+    print("  Chapters finished:")
+    for chapter in currently_finished_chapters:
+        print(f"    · {chapter.title()}")
