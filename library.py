@@ -31,7 +31,8 @@ class Library:
         book = Book()
         book.new_book()
 
-        self._archive_collection()
+        # Add book to collection and write to archive.
+        self.archive_book(book)
 
     def set_currently_reading_book(self, book_title):
         """Checkout book and mark it as currently being read."""
@@ -40,7 +41,7 @@ class Library:
             book.currently_reading = True
 
             # Add book to collection and write to archive.
-            self._archive_book(book)
+            self.archive_book(book)
 
         else:
             print(
