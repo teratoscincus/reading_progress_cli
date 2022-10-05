@@ -28,13 +28,24 @@ def calculate_progress(book_info):
                 current_chapter_total_pages - current_chapter_pages_read
             )
 
-    # Add number of read pages from chapter currently being read.
-    total_pages_read += current_chapter_pages_read
+    # If all chapters are finished.
+    if current_chapter == None:
+        current_chapter_total_pages = None
+        current_chapter_pages_read = None
+        current_chapter_pages_left = None
+        chapter_progress_percent = None
 
-    total_progress_percent = (total_pages_read / book.total_pages) * 100
-    chapter_progress_percent = (
-        current_chapter_pages_read / current_chapter_total_pages
-    ) * 100
+    # Add number of read pages from chapter currently being read.
+    try:
+        total_pages_read += current_chapter_pages_read
+    # TypeError can be thrown since current_chapter_pages_read can have None value.
+    except TypeError:
+        total_progress_percent = 100
+    else:
+        total_progress_percent = (total_pages_read / book.total_pages) * 100
+        chapter_progress_percent = (
+            current_chapter_pages_read / current_chapter_total_pages
+        ) * 100
 
     return (
         current_chapter_pages_left,

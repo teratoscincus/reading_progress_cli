@@ -65,33 +65,48 @@ class Book:
         In such a case it will call a method to find the first chapter not marked as
         finished and place the bookmark on the first page of that chapter.
         """
-        for chapter in self.chapters:
-            # Check what chapter the page is in.
-            if (
-                self.chapters[chapter]["first_page"]
-                <= page_number
-                <= self.chapters[chapter]["last_page"]
-            ):
-                # Name of chapter of given page number.
-                page_number_chapter = chapter
-                # Bookmark given page only if the chapter it's in is not finished.
-                if self.chapters[chapter]["finished"] == False:
-                    self.current_page = page_number
-                    break
+        if page_number != None:
+            for chapter in self.chapters:
+                # Check what chapter the page is in.
+                if (
+                    self.chapters[chapter]["first_page"]
+                    <= page_number
+                    <= self.chapters[chapter]["last_page"]
+                ):
+                    # Name of chapter of given page number.
+                    page_number_chapter = chapter
+                    # Bookmark given page only if the chapter it's in is not finished.
+                    if self.chapters[chapter]["finished"] == False:
+                        self.current_page = page_number
+                        break
+            # If loop is exited without a break.
+            # Happens when given page_number is not in an unfinished chapter.
+            else:
+                # Check for unfinished chapters.
+                unfinished_chapter = self._get_first_unfinished_chapter_name()
+                try:
+                    # Bookmark first page of first unfinished chapter.
+                    first_page = self.chapters[unfinished_chapter]["first_page"]
 
-        else:
-            # Bookmark first page of first unfinished chapter.
-            unfinished_chapter = self._get_first_unfinished_chapter_name()
-            first_page = self.chapters[unfinished_chapter]["first_page"]
-            self.current_page = first_page
+                # All chapters are finished.
+                # Throws a KeyError if there are no unfinished chapters.
+                except KeyError:
+                    # Prevent progress greater than 100%.
+                    self.current_page = None
+                    error_message = "All chapters finished!"
 
-            error_message = (
-                f"Page {page_number} is in the chapter '{page_number_chapter.title()}'"
-                " that is marked as finished.\nNOTE: Placing bookmark on first page of"
-                f" '{unfinished_chapter.title()}' which is the first chapter"
-                " identified as unfinished."
-            )
-            print(error_message)
+                # In case an unfinished chapters is found.
+                else:
+                    self.current_page = first_page
+
+                    error_message = (
+                        f"Page {page_number} is in the chapter '{page_number_chapter.title()}'"
+                        " that is marked as finished.\nNOTE: Placing bookmark on first page of"
+                        f" '{unfinished_chapter.title()}' which is the first chapter"
+                        " identified as unfinished."
+                    )
+
+                print(error_message)
 
     def _get_first_unfinished_chapter_name(self):
         """Return name of the first chapter in ascending order that is unfinished."""
@@ -115,11 +130,13 @@ class Book:
         Return a string with the name of the chapter containing the page that is
         bookmarked.
         """
-        # Find chapter with bookmarked page.
-        for chapter in self.chapters:
-            if (
-                self.chapters[chapter]["first_page"]
-                <= self.current_page
-                <= self.chapters[chapter]["last_page"]
-            ):
-                return chapter
+        # current_page is None is all chapters are finished.
+        if self.current_page:
+            # Find chapter with bookmarked page.
+            for chapter in self.chapters:
+                if (
+                    self.chapters[chapter]["first_page"]
+                    <= self.current_page
+                    <= self.chapters[chapter]["last_page"]
+                ):
+                    return chapter
