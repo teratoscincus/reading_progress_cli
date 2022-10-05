@@ -122,7 +122,7 @@ elif args.list_books:
     for book_title in library.collection:
         print(f"    · {book_title.title()}")
 # Show reading progress of book currently being read.
-else:
+elif not args.add_book:
     # Used for below call to calculate_progress() and print().
     currently_read_chapter = currently_read_book.get_current_chapter_name()
     currently_finished_chapters = currently_read_book.get_finished_chapter_names()
