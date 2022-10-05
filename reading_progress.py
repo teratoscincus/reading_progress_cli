@@ -58,7 +58,7 @@ if args.add_book:
 # Change book currently being read.
 if args.currently_reading:
     # Mark book as currently being read.
-    library.set_currently_reading_book(args.currently_reading)
+    library.set_currently_reading_book(args.currently_reading.lower())
 
 # Init book marked as currently being read.
 currently_read_book = library.get_currently_read_book()
@@ -70,7 +70,7 @@ if args.bookmark_page:
 
 # Mark a chapter in book currently being read as completed.
 if args.finished_chapter:
-    chapter = currently_read_book.chapters[args.finished_chapter]
+    chapter = currently_read_book.chapters[args.finished_chapter.lower()]
 
     # Mark given chapter as finished.
     chapter["finished"] = True
