@@ -82,6 +82,22 @@ if args.currently_reading:
     if currently_read_book:
         # Save changes.
         library.archive_book(currently_read_book)
+
+        # Used for below call to calculate_progress() and print().
+        currently_read_chapter = currently_read_book.get_current_chapter_name()
+        currently_finished_chapters = currently_read_book.get_finished_chapter_names()
+
+        # Parse calculate_progress() call argument.
+        currently_read_book_info = (
+            currently_read_book,
+            currently_finished_chapters,
+            currently_read_chapter,
+        )
+        # Calculate reading progress.
+        progress_info = calculate_progress(currently_read_book_info)
+
+        # Print reading progress.
+        print_progress(currently_read_book_info, progress_info)
     else:
         print(
             f"\n  Sorry, couldn't find '{book_title}' in the collection.\n"
