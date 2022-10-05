@@ -17,14 +17,14 @@ class Book:
 
     def new_book(self):
         """Set values for the title and chapters attribute."""
-        self.title = input("Title of book: ").lower()
+        self.title = input("Title of book: ").strip().lower()
         self._set_chapters()
 
     def _set_chapters(self):
         """Set the values of the chapters attribute."""
         print("Enter 'q' when there are no more chapters to add.")
         while True:
-            chapter_name = input("Enter name of chapter: ").lower()
+            chapter_name = input("Enter name of chapter: ").strip().lower()
 
             # Set total number of pages and break.
             if chapter_name == "q":
@@ -52,7 +52,7 @@ class Book:
     def _set_page_number(self):
         """Set page number and check that it's a numerical value."""
         while True:
-            page_number = input("Last page of chapter: ")
+            page_number = input("Last page of chapter: ").strip()
             try:
                 return int(page_number)
             except ValueError:
@@ -130,7 +130,7 @@ class Book:
         Return a string with the name of the chapter containing the page that is
         bookmarked.
         """
-        # current_page is None is all chapters are finished.
+        # current_page is None is when all chapters are finished.
         if self.current_page:
             # Find chapter with bookmarked page.
             for chapter in self.chapters:
