@@ -28,18 +28,19 @@ def print_progress(currently_read_book_info, progress_info):
             f" '{currently_read_chapter.title()}'.\n"
             f"  You have read {current_chapter_pages_read} pages in the chapter so far.\n"
             f"\n  Book progress:\t{round(total_progress_percent, 2)}%.\n"
-            f"  Chapter progress:\t{round(chapter_progress_percent, 2)}%.\n"
+            f"  Chapter progress:\t{round(chapter_progress_percent, 2)}%."
         )
     # All chapters are finished.
     else:
         progress_message = (
             f"\n  Currently reading '{currently_read_book.title.title()}'.\n"
             f"  Book progress:\t{round(total_progress_percent, 2)}%.\n"
-            "\n  Congratulation! You have read the entire book.\n"
+            "\n  Congratulation! You have read the entire book."
         )
     print(progress_message)
 
-    # Print bullet list of finished chapters.
-    print("  Chapters finished:")
-    for chapter in currently_finished_chapters:
-        print(f"    · {chapter.title()}")
+    if currently_finished_chapters:
+        # Print bullet list of finished chapters.
+        print("\n  Chapters finished:")
+        for chapter in currently_finished_chapters:
+            print(f"    · {chapter.title()}")
