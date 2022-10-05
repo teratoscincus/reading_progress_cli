@@ -23,7 +23,8 @@ def print_progress(currently_read_book_info, progress_info):
     # A chapter is currently being read.
     if currently_read_chapter:
         progress_message = (
-            f"\n  Currently reading '{currently_read_book.title.title()}'.\n"
+            f"\n  Currently on page {currently_read_book.current_page} in"
+            f" '{currently_read_book.title.title()}'.\n"
             f"\n  You have {current_chapter_pages_left} pages left of"
             f" '{currently_read_chapter.title()}'.\n"
             f"  You have read {current_chapter_pages_read} pages in the chapter so far.\n"
