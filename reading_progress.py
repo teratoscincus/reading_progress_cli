@@ -73,8 +73,9 @@ if args.add_book:
 
 # Change book currently being read.
 if args.currently_reading:
+    book_title = args.currently_reading.strip().lower()
     # Mark book as currently being read.
-    library.set_currently_reading_book(args.currently_reading.lower())
+    library.set_currently_reading_book(book_title)
 
 # Init book marked as currently being read.
 currently_read_book = library.get_currently_read_book()
@@ -86,9 +87,10 @@ if args.bookmark_page:
 
 # Mark a chapter in book currently being read as completed.
 if args.finished_chapter:
+    chapter_title = args.finished_chapter.strip().lower()
     # Make sure given chapter is in the book.
-    if args.finished_chapter in currently_read_book.chapters:
-        chapter = currently_read_book.chapters[args.finished_chapter.lower()]
+    if chapter_title in currently_read_book.chapters:
+        chapter = currently_read_book.chapters[chapter_title]
 
         # Mark given chapter as finished.
         chapter["finished"] = True
@@ -99,7 +101,7 @@ if args.finished_chapter:
         currently_read_book.bookmark_page(current_page)
     else:
         warning_message = (
-            f"'{args.finished_chapter.title()}' is not a chapter of"
+            f"'{chapter_title.title()}' is not a chapter of"
             f" '{currently_read_book.title.title()}'.\n"
             "Perhaps there was an typo in the given title, or it's part of another"
             " book?"
@@ -122,6 +124,7 @@ elif args.list_books:
     for book_title in library.collection:
         print(f"    · {book_title.title()}")
 # Show reading progress of book currently being read.
+# Only do so when no listing or adding of a new book is made to reduce CLI clutter.
 elif not args.add_book:
     # Used for below call to calculate_progress() and print().
     currently_read_chapter = currently_read_book.get_current_chapter_name()
@@ -143,6 +146,7 @@ elif not args.add_book:
     ) = progress_info
 
     # Print reading progress.
+    # A chapter is currently being read.
     if chapter_progress_percent:
         progress_message = (
             f"\n  Currently reading '{currently_read_book.title.title()}'.\n"
@@ -152,6 +156,7 @@ elif not args.add_book:
             f"\n  Book progress:\t{round(total_progress_percent, 2)}%.\n"
             f"  Chapter progress:\t{round(chapter_progress_percent, 2)}%.\n"
         )
+    # All chapters are finished.
     else:
         progress_message = (
             f"\n  Currently reading '{currently_read_book.title.title()}'.\n"
