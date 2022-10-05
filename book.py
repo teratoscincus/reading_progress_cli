@@ -98,3 +98,28 @@ class Book:
         for chapter in self.chapters:
             if self.chapters[chapter]["finished"] == False:
                 return chapter
+
+    def get_finished_chapter_names(self):
+        """Return a list of the names of chapters that are finished."""
+        finished_chapters = []
+
+        # Append all chapters marked as finished to list.
+        for chapter in self.chapters:
+            if self.chapters[chapter]["finished"] == True:
+                finished_chapters.append(chapter)
+
+        return finished_chapters
+
+    def get_current_chapter_name(self):
+        """
+        Return a string with the name of the chapter containing the page that is
+        bookmarked.
+        """
+        # Find chapter with bookmarked page.
+        for chapter in self.chapters:
+            if (
+                self.chapters[chapter]["first_page"]
+                <= self.current_page
+                <= self.chapters[chapter]["last_page"]
+            ):
+                return chapter
