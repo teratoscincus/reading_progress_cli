@@ -36,7 +36,8 @@ class Library:
 
     def set_currently_reading_book(self, book_title):
         """
-        Checkout book and mark it as currently being read.
+        Mark book specified by title as currently being read, and return an instance of
+        the book currently being read.
         Only one book at a time will be marked as currently being read.
         Removes status of currently being read from previous book that had it set to
         True.
@@ -45,17 +46,15 @@ class Library:
             # Remove status of previously read book.
             previously_read_book = self.get_currently_read_book()
             previously_read_book.currently_reading = False
+
             self.archive_book(previously_read_book)
 
             # Change status of book specifies by title.
             currently_read_book = self._get_book_by_title(book_title)
             currently_read_book.currently_reading = True
-            self.archive_book(currently_read_book)
-        else:
-            print(
-                f"Sorry, couldn't find '{book_title}' in the collection."
-                "\nAre you sure you spelled the title correctly?"
-            )
+
+            # Return an instance of the book.
+            return currently_read_book
 
     def _get_book_by_title(self, book_title):
         """Return an instance of a book specified by its title."""
