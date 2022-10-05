@@ -70,15 +70,25 @@ if args.bookmark_page:
 
 # Mark a chapter in book currently being read as completed.
 if args.finished_chapter:
-    chapter = currently_read_book.chapters[args.finished_chapter.lower()]
+    # Make sure given chapter is in the book.
+    if args.finished_chapter in currently_read_book.chapters:
+        chapter = currently_read_book.chapters[args.finished_chapter.lower()]
 
-    # Mark given chapter as finished.
-    chapter["finished"] = True
+        # Mark given chapter as finished.
+        chapter["finished"] = True
 
-    # Make sure current page is not in a chapter marked as finished.
-    current_page = currently_read_book.current_page
-    # Attempt to bookmark current_page.
-    currently_read_book.bookmark_page(current_page)
+        # Make sure current page is not in a chapter marked as finished.
+        current_page = currently_read_book.current_page
+        # Attempt to bookmark current_page.
+        currently_read_book.bookmark_page(current_page)
+    else:
+        warning_message = (
+            f"'{args.finished_chapter.title()}' is not a chapter of"
+            f" '{currently_read_book.title.title()}'.\n"
+            "Perhaps there was an typo in the given title, or it's part of another"
+            " book?"
+        )
+        print(warning_message)
 
 # Save changes.
 library.archive_book(currently_read_book)
