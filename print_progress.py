@@ -1,4 +1,4 @@
-def print_progress(currently_read_book_info, progress_info):
+def print_progress(currently_read_book_info, progress_info, unfinished_chapters):
     """
     Print a message to the CLI about the reading progress.
     Expects two tuple or list arguments.
@@ -44,4 +44,10 @@ def print_progress(currently_read_book_info, progress_info):
         # Print bullet list of finished chapters.
         print("\n  Chapters finished:")
         for chapter in currently_finished_chapters:
+            print(f"    · {chapter.title()}")
+
+    if unfinished_chapters:
+        # Print bullet list of finished chapters.
+        print("\n  Chapters remaining:")
+        for chapter in unfinished_chapters:
             print(f"    · {chapter.title()}")

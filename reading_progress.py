@@ -179,9 +179,10 @@ elif args.list_books:
 # Show reading progress of book currently being read.
 # Only do so when no listing or adding of a new book is made to reduce CLI clutter.
 elif not (args.add_book or args.finished_chapter or args.currently_reading):
-    # Used for below call to calculate_progress() and print().
+    # Used for below call to calculate_progress() and print_progress().
     currently_read_chapter = currently_read_book.get_current_chapter_name()
     currently_finished_chapters = currently_read_book.get_finished_chapter_names()
+    currently_unfinished_chapters = currently_read_book.get_unfinished_chapter_names()
 
     # Parse calculate_progress() call argument.
     currently_read_book_info = (
@@ -193,4 +194,6 @@ elif not (args.add_book or args.finished_chapter or args.currently_reading):
     progress_info = calculate_progress(currently_read_book_info)
 
     # Print reading progress.
-    print_progress(currently_read_book_info, progress_info)
+    print_progress(
+        currently_read_book_info, progress_info, currently_unfinished_chapters
+    )
