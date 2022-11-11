@@ -125,6 +125,17 @@ class Book:
 
         return finished_chapters
 
+    def get_unfinished_chapter_names(self):
+        """Return a list of the ames of chapters that are not finished."""
+        finished_chapters = []
+
+        # Append all chapters marked as finished to list.
+        for chapter in self.chapters:
+            if self.chapters[chapter]["finished"] == False:
+                finished_chapters.append(chapter)
+
+        return finished_chapters
+
     def get_current_chapter_name(self):
         """
         Return a string with the name of the chapter containing the page that is
