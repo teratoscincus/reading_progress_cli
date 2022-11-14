@@ -139,6 +139,9 @@ if args.finished_chapter:
         # Used for below call to calculate_progress() and print().
         currently_read_chapter = currently_read_book.get_current_chapter_name()
         currently_finished_chapters = currently_read_book.get_finished_chapter_names()
+        currently_unfinished_chapters = (
+            currently_read_book.get_unfinished_chapter_names()
+        )
 
         # Parse calculate_progress() call argument.
         currently_read_book_info = (
@@ -150,7 +153,9 @@ if args.finished_chapter:
         progress_info = calculate_progress(currently_read_book_info)
 
         # Print reading progress.
-        print_progress(currently_read_book_info, progress_info)
+        print_progress(
+            currently_read_book_info, progress_info, currently_unfinished_chapters
+        )
     else:
         warning_message = (
             f"\n  Sorry, couldn't find the chapter '{chapter_title.title()}' in the"
