@@ -55,6 +55,14 @@ parser.add_argument(
     const=True,
     help=("List chapters of currently read book."),
 )
+# Print name of current chapter of currently read book.
+parser.add_argument(
+    "-cn",
+    "--chapter_name",
+    nargs="?",
+    const=True,
+    help=("Print name of current chapter of currently read book."),
+)
 # List book titles in collection.
 parser.add_argument(
     "-lb",
@@ -187,6 +195,8 @@ elif args.list_books:
     for book_title in library.collection:
         print(f"    · {book_title.title()}")
 # Show reading progress of book currently being read.
+elif args.chapter_name:
+    print(currently_read_book.get_current_chapter_name())
 # Only do so when no listing or adding of a new book is made to reduce CLI clutter.
 elif not (args.add_book or args.finished_chapter or args.currently_reading):
     # Used for below call to calculate_progress() and print_progress().
