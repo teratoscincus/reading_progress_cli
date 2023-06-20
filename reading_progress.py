@@ -133,11 +133,34 @@ if args.bookmark_page:
 
 # Mark a chapter in book currently being read as completed.
 if args.finished_chapter:
-    chapter_title = args.finished_chapter.strip().lower()
-    # Make sure given chapter is in the book.
-    if chapter_title in currently_read_book.chapters:
-        chapter = currently_read_book.chapters[chapter_title]
-
+    try:
+        chapter_number = int(args.finished_chapter)
+    except ValueError:
+        chapter_title = args.finished_chapter.strip().lower()
+        # Make sure given chapter is in the book.
+        if chapter_title in currently_read_book.chapters:
+            chapter = currently_read_book.chapters[chapter_title]
+        else:
+            warning_message = (
+                f"\n  Sorry, couldn't find the chapter '{chapter_title.title()}' in the"
+                " book.\n"
+                "  Perhaps there was an typo in the given title, or it's part of another"
+                " book?\n"
+            )
+            print(warning_message)
+            # List chapters of currently read book.
+            print(f"  Chapters of '{currently_read_book.title.title()}':")
+            for chapter in currently_read_book.chapters:
+                print(f"    · {chapter.title()}")
+    else:
+        for i, chapter_title in enumerate(
+            currently_read_book.get_unfinished_chapter_names()
+        ):
+            chapter = currently_read_book.chapters[chapter_title]
+            # Find chapter referenced by number.
+            if i == chapter_number:
+                break
+    finally:
         # Mark given chapter as finished.
         chapter["finished"] = True
 
@@ -169,25 +192,13 @@ if args.finished_chapter:
         print_progress(
             currently_read_book_info, progress_info, currently_unfinished_chapters
         )
-    else:
-        warning_message = (
-            f"\n  Sorry, couldn't find the chapter '{chapter_title.title()}' in the"
-            " book.\n"
-            "  Perhaps there was an typo in the given title, or it's part of another"
-            " book?\n"
-        )
-        print(warning_message)
-        # List chapters of currently read book.
-        print(f"  Chapters of '{currently_read_book.title.title()}':")
-        for chapter in currently_read_book.chapters:
-            print(f"    · {chapter.title()}")
 
 # List chapters of currently read book.
 if args.list_chapters:
     print(f"\n  Currently reading '{currently_read_book.title.title()}'.")
     print("\n  Chapters of the book:")
-    for chapter in currently_read_book.chapters:
-        print(f"    · {chapter.title()}")
+    for i, chapter in enumerate(currently_read_book.chapters):
+        print(f"   {i}\t{chapter.title()}")
 # List book titles in collection.
 elif args.list_books:
     print(f"\n  Currently reading '{currently_read_book.title.title()}'.")

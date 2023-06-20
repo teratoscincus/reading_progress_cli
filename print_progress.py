@@ -43,11 +43,11 @@ def print_progress(currently_read_book_info, progress_info, unfinished_chapters)
     if currently_finished_chapters:
         # Print bullet list of finished chapters.
         print("\n  Chapters finished:")
-        for chapter in currently_finished_chapters:
-            print(f"    · {chapter.title()}")
+        for i, chapter in enumerate(currently_finished_chapters):
+            print(f"   {i}\t{chapter.title()}")
 
     if unfinished_chapters:
         # Print bullet list of finished chapters.
         print("\n  Chapters remaining:")
-        for chapter in unfinished_chapters:
-            print(f"    · {chapter.title()}")
+        for i, chapter in enumerate(unfinished_chapters):
+            print(f"   {i}\t{chapter.title()}")
