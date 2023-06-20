@@ -27,8 +27,8 @@ def print_progress(currently_read_book_info, progress_info, unfinished_chapters)
             f" '{currently_read_book.title.title()}'.\n"
             f"\n  You have {current_chapter_pages_left} pages left of"
             f" '{currently_read_chapter.title()}'.\n"
-            f"  You have read {current_chapter_pages_read} pages in the chapter so far.\n"
-            f"\n  Book progress:\t{round(total_progress_percent, 2)}%\n"
+            f"  You have read {current_chapter_pages_read} pages in the chapter so far."
+            f"\n\n  Book progress:\t{round(total_progress_percent, 2)}%\n"
             f"  Chapter progress:\t{round(chapter_progress_percent, 2)}%"
         )
     # All chapters are finished.

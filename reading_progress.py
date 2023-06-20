@@ -144,8 +144,8 @@ if args.finished_chapter:
             warning_message = (
                 f"\n  Sorry, couldn't find the chapter '{chapter_title.title()}' in the"
                 " book.\n"
-                "  Perhaps there was an typo in the given title, or it's part of another"
-                " book?\n"
+                "  Perhaps there was an typo in the given title, or it's part of"
+                " another book?\n"
             )
             print(warning_message)
             # List chapters of currently read book.

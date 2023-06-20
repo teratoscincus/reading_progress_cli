@@ -72,7 +72,7 @@ class Library:
         """Return an instance of the book marked as currently being read."""
         # Find book marked as currently being read.
         for book_title in self.collection:
-            if self.collection[book_title]["currently_reading"] == True:
+            if self.collection[book_title]["currently_reading"]:
                 break
 
         book = self._get_book_by_title(book_title)

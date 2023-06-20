@@ -65,7 +65,7 @@ class Book:
         In such a case it will call a method to find the first chapter not marked as
         finished and place the bookmark on the first page of that chapter.
         """
-        if page_number != None:
+        if page_number is not None:
             for chapter in self.chapters:
                 # Check what chapter the page is in.
                 if (
@@ -76,7 +76,7 @@ class Book:
                     # Name of chapter of given page number.
                     page_number_chapter = chapter
                     # Bookmark given page only if the chapter it's in is not finished.
-                    if self.chapters[chapter]["finished"] == False:
+                    if not self.chapters[chapter]["finished"]:
                         self.current_page = page_number
                         break
             # If loop is exited without a break.
@@ -100,8 +100,9 @@ class Book:
                     self.current_page = first_page
 
                     error_message = (
-                        f"Page {page_number} is in the chapter '{page_number_chapter.title()}'"
-                        " that is marked as finished.\nNOTE: Placing bookmark on first page of"
+                        f"Page {page_number} is in the chapter "
+                        f" '{page_number_chapter.title()}' that is marked as finished."
+                        "\nNOTE: Placing bookmark on first page of"
                         f" '{unfinished_chapter.title()}' which is the first chapter"
                         " identified as unfinished."
                     )
@@ -111,7 +112,7 @@ class Book:
     def _get_first_unfinished_chapter_name(self):
         """Return name of the first chapter in ascending order that is unfinished."""
         for chapter in self.chapters:
-            if self.chapters[chapter]["finished"] == False:
+            if not self.chapters[chapter]["finished"]:
                 return chapter
 
     def get_finished_chapter_names(self):
@@ -120,7 +121,7 @@ class Book:
 
         # Append all chapters marked as finished to list.
         for chapter in self.chapters:
-            if self.chapters[chapter]["finished"] == True:
+            if self.chapters[chapter]["finished"]:
                 finished_chapters.append(chapter)
 
         return finished_chapters
@@ -131,7 +132,7 @@ class Book:
 
         # Append all chapters marked as finished to list.
         for chapter in self.chapters:
-            if self.chapters[chapter]["finished"] == False:
+            if not self.chapters[chapter]["finished"]:
                 finished_chapters.append(chapter)
 
         return finished_chapters
