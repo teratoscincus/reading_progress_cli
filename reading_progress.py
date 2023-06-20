@@ -1,7 +1,7 @@
 import argparse
 
-from library import Library
 from calculate_progress import calculate_progress
+from library import Library
 from print_progress import print_progress
 
 parser = argparse.ArgumentParser()
@@ -22,7 +22,7 @@ parser.add_argument(
     "--currently_reading",
     help=(
         "Switch between books to mark as currently reading."
-        " Specify the title of the book withing quotation marks."
+        " Specify the title of the book within quotation marks."
     ),
 )
 # Bookmark page.
@@ -41,7 +41,7 @@ parser.add_argument(
     "--finished_chapter",
     help=(
         "Log a chapter in the book marked as currently reading as finished."
-        " Specify the name of the chapter withing quotation marks."
+        " Specify the name of the chapter within quotation marks."
         " Checks if bookmarked page is in the chapter being marked as finished."
         " If so, the bookmark will be moved to the first page of the first chapter"
         " identified as unfinished."
